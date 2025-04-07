@@ -31,7 +31,6 @@ public class AlunoService {
         Aluno alunoExistente = buscarPorId(id);
         alunoExistente.setNome(alunoAtualizado.getNome());
         alunoExistente.setEmail(alunoAtualizado.getEmail());
-        alunoExistente.setIdade(alunoAtualizado.getIdade());
         return alunoRepository.save(alunoExistente);
     }
 

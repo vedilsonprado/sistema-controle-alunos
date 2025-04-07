@@ -1,25 +1,31 @@
 package com.senai.avaliacaoalunos.entities;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
-public class Aluno {
+public class Turma {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
-    private String email;
 
     @ManyToOne
-    @JoinColumn(name = "turma_id")
-    private Turma turma;
+    @JoinColumn(name = "semestre_id")
+    private Semestre semestre;
+
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
+    private List<Aluno> alunos;
 
     // Getters e Setters
     public Long getId() {
@@ -38,19 +44,19 @@ public class Aluno {
         this.nome = nome;
     }
 
-    public String getEmail() {
-        return email;
+    public Semestre getSemestre() {
+        return semestre;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setSemestre(Semestre semestre) {
+        this.semestre = semestre;
     }
 
-    public Turma getTurma() {
-        return turma;
+    public List<Aluno> getAlunos() {
+        return alunos;
     }
 
-    public void setTurma(Turma turma) {
-        this.turma = turma;
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
     }
 }
