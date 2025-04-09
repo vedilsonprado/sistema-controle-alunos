@@ -1,84 +1,71 @@
-const menuLateral = document.getElementById('menuLateral');
-const tituloTurma = document.getElementById('tituloTurma');
-const listaAlunos = document.getElementById('listaAlunos');
+ const menuLateral = document.getElementById('menuLateral');
+ const tituloTurma = document.getElementById('tituloTurma');
+ const listaAlunos = document.getElementById('listaAlunos');
+ const conteudoPrincipal = document.getElementById('conteudoPrincipal');
 
-// Carrega as turmas no menu lateral
-async function carregarTurmas() {
-    menuLateral.innerHTML = '';
+ // Carrega as turmas no menu lateral
+ async function carregarTurmas() {
+     menuLateral.innerHTML = '';
 
-    const response = await fetch('/turmas');
-    const turmas = await response.json();
+     const response = await fetch('/turmas');
+     const turmas = await response.json();
 
-    turmas.forEach(turma => {
-        const botaoTurma = document.createElement('button');
-        botaoTurma.innerText = turma.nome;
-        botaoTurma.addEventListener('click', () => {
+     turmas.forEach(turma => {
+         const botaoTurma = document.createElement('button');
+         botaoTurma.innerText = turma.nome;
+         botaoTurma.addEventListener('click', () => {
             window.location.href = `listaalunos.html?idTurma=${turma.id}&nomeTurma=${encodeURIComponent(turma.nome)}`;
-        });
+         });
 
-        menuLateral.appendChild(botaoTurma);
+         menuLateral.appendChild(botaoTurma);
+     });
+ }
+
+ async function carregarAlunosDaTurma(idTurma, nomeTurma) {
+     tituloTurma.innerText = nomeTurma;
+     listaAlunos.innerHTML = '';
+
+     const response = await fetch(`/turmas/${idTurma}/alunos`);
+     const alunos = await response.json();
+
+     alunos.forEach(aluno => {
+         const card = document.createElement('div');
+         card.classList.add('card-aluno');
+
+         const img = document.createElement('img');
+         img.src = aluno.foto || 'img/usuario-sem-foto.png';
+         img.alt = 'Foto do aluno';
+
+         const nome = document.createElement('p');
+         nome.innerText = aluno.nome;
+
+         card.appendChild(img);
+         card.appendChild(nome);
+
+         card.addEventListener('click', () => {
+             window.location.href = `perfilaluno.html?idAluno=${aluno.id}`;
+         });
+
+         listaAlunos.appendChild(card);
+     });
+
+    const botaoAdicionar = document.createElement('button');
+    botaoAdicionar.innerText = 'Adicionar';
+    botaoAdicionar.classList.add('botao-adicionar');
+    botaoAdicionar.addEventListener('click', () => {
+        window.location.href = `cadastroaluno.html?idTurma=${idTurma}`;
     });
-}
+    conteudoPrincipal.insertBefore(botaoAdicionar, listaAlunos);
+ }
 
-// Carrega os alunos de uma turma específica
-async function carregarAlunosDaTurma(idTurma, nomeTurma) {
-    tituloTurma.innerText = `Alunos da Turma: ${nomeTurma}`;
+ document.addEventListener('DOMContentLoaded', async () => {
+     await carregarTurmas();
 
-    const response = await fetch(`/turmas/${idTurma}/alunos`);
+     const urlParams = new URLSearchParams(window.location.search);
+     const idTurma = urlParams.get('idTurma');
+     const nomeTurma = urlParams.get('nomeTurma');
 
-    if (!response.ok) {
-        listaAlunos.innerHTML = '<p>Erro ao buscar alunos da turma.</p>';
-        return;
-    }
-
-    const alunos = await response.json();
-
-    listaAlunos.innerHTML = '';
-
-    alunos.forEach(aluno => {
-        // Cria o card do aluno
-        const cardAluno = document.createElement('div');
-        cardAluno.classList.add('card-aluno');
-
-        // Cria a imagem do aluno
-        const imagemAluno = document.createElement('img');
-        imagemAluno.src = aluno.foto || 'https://via.placeholder.com/150'; // Caso não tenha foto
-        imagemAluno.alt = `Foto de ${aluno.nome}`;
-
-        // Cria o nome do aluno
-        const nomeAluno = document.createElement('p');
-        nomeAluno.innerText = aluno.nome;
-
-        // Adiciona evento de clique no card para ir ao perfil
-        cardAluno.addEventListener('click', () => {
-            window.location.href = `perfilaluno.html?idAluno=${aluno.id}`;
-        });
-
-        // Monta o card
-        cardAluno.appendChild(imagemAluno);
-        cardAluno.appendChild(nomeAluno);
-
-        // Adiciona o card à lista
-        listaAlunos.appendChild(cardAluno);
-    });
-}
-
-// Função que pega os parâmetros da URL
-function obterParametrosURL() {
-    const params = new URLSearchParams(window.location.search);
-    return {
-        idTurma: params.get('idTurma'),
-        nomeTurma: params.get('nomeTurma')
-    };
-}
-
-// Inicializa a página
-document.addEventListener('DOMContentLoaded', () => {
-    carregarTurmas();
-
-    const { idTurma, nomeTurma } = obterParametrosURL();
-
-    if (idTurma && nomeTurma) {
-        carregarAlunosDaTurma(idTurma, nomeTurma);
-    }
-});
+     if (idTurma && nomeTurma) {
+         await carregarAlunosDaTurma(idTurma, nomeTurma);
+     }
+ });

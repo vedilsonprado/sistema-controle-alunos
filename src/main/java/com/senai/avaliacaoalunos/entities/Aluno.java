@@ -1,5 +1,7 @@
 package com.senai.avaliacaoalunos.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +20,7 @@ public class Aluno {
 
     @ManyToOne
     @JoinColumn(name = "turma_id")
+    @JsonBackReference
     private Turma turma;
 
     // Getters e Setters

@@ -36,7 +36,7 @@ public class AlunoController {
     public Aluno criar(@RequestBody Aluno aluno) {
         return alunoService.salvar(aluno);
     }
-
+    
     @PutMapping("/{id}")
     public Aluno atualizar(@PathVariable Long id, @RequestBody Aluno aluno) {
         return alunoService.atualizarAluno(id, aluno);

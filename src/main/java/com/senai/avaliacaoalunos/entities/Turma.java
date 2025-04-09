@@ -2,6 +2,8 @@ package com.senai.avaliacaoalunos.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +26,7 @@ public class Turma {
 	private Semestre semestre;
 
 	@OneToMany(mappedBy = "turma")
+	@JsonManagedReference
 	private List<Aluno> alunos;
 
 	// Getters e Setters
