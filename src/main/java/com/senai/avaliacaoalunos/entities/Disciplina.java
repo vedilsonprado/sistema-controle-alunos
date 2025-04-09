@@ -1,14 +1,13 @@
 package com.senai.avaliacaoalunos.entities;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Aluno {
+public class Disciplina {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,9 +15,7 @@ public class Aluno {
 
     private String nome;
 
-    @ManyToOne
-    @JoinColumn(name = "turma_id")
-    private Turma turma;
+    private int cargaHoraria;
 
     // Getters e Setters
     public Long getId() {
@@ -37,11 +34,12 @@ public class Aluno {
         this.nome = nome;
     }
 
-    public Turma getTurma() {
-        return turma;
+    public int getCargaHoraria() {
+        return cargaHoraria;
     }
 
-    public void setTurma(Turma turma) {
-        this.turma = turma;
+    public void setCargaHoraria(int cargaHoraria) {
+        this.cargaHoraria = cargaHoraria;
     }
 }
+

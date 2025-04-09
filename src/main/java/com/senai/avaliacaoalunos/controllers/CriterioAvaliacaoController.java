@@ -7,43 +7,37 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.senai.avaliacaoalunos.entities.Aluno;
-import com.senai.avaliacaoalunos.services.AlunoService;
+import com.senai.avaliacaoalunos.entities.CriterioAvaliacao;
+import com.senai.avaliacaoalunos.services.CriterioAvaliacaoService;
 
 @RestController
-@RequestMapping("/api/alunos")
-public class AlunoController {
+@RequestMapping("/api/criterios-avaliacao")
+public class CriterioAvaliacaoController {
 
     @Autowired
-    private AlunoService alunoService;
+    private CriterioAvaliacaoService service;
 
     @GetMapping
-    public List<Aluno> listar() {
-        return alunoService.listarTodos();
+    public List<CriterioAvaliacao> listar() {
+        return service.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public Aluno buscar(@PathVariable Long id) {
-        return alunoService.buscarPorId(id);
+    public CriterioAvaliacao buscarPorId(@PathVariable Long id) {
+        return service.buscarPorId(id);
     }
 
     @PostMapping
-    public Aluno criar(@RequestBody Aluno aluno) {
-        return alunoService.salvar(aluno);
-    }
-
-    @PutMapping("/{id}")
-    public Aluno atualizar(@PathVariable Long id, @RequestBody Aluno aluno) {
-        return alunoService.atualizarAluno(id, aluno);
+    public CriterioAvaliacao salvar(@RequestBody CriterioAvaliacao criterioAvaliacao) {
+        return service.salvar(criterioAvaliacao);
     }
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
-        alunoService.deletar(id);
+        service.deletar(id);
     }
 }

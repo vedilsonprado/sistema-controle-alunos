@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Escolar - Lista de Alunos</title>
+    <link rel="stylesheet" href="./css/estilo.css">
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <div class="menu-header">
+            <a href="./index.html"><img src="img/logo-senai.jpg" alt="Logo" class="logo"></a>
+        </div>
+    </header>
+
+    <!-- Corpo da página -->
+    <main>
+        <aside class="menu-lateral" id="menuLateral">
+            <!-- Botões das turmas serão adicionados aqui via JS -->
+        </aside>
+
+        <section class="conteudo-principal" id="conteudoPrincipal">
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 id="tituloTurma">Lista de Alunos</h2>
+                <button onclick="window.location.href='cadastroaluno.html'">Adicionar</button>
+            </div>
+
+            <div class="lista-alunos" id="listaAlunos">
+                <!-- Alunos serão carregados aqui via JS -->
+            </div>
+
+        </section>
+    </main>
+
+    <script src="./script/listaalunos.js"></script>
+
+</body>
+
+</html>
