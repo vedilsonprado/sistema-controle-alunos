@@ -1,5 +1,6 @@
 package com.senai.avaliacaoalunos.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,12 +11,13 @@ import jakarta.persistence.Table;
 @Table(name = "resultado_criterio")
 public class ResultadoCriterio {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String resultado; 
-    // Valores: "Não Atingido", "Atingido na Avaliação", "Atingido na Recuperação"
+	@Column(name = "resultado")
+	private String resultado;
+	// Valores: "Não Atingido", "Atingido na Avaliação", "Atingido na Recuperação"
 
-    // Getters e Setters
+	// Getters e Setters
 }
